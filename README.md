@@ -12,7 +12,7 @@ jQuery helper plugin, adds class to elements when window is scrolled to it's pos
 if ($.fn.stickyitemSetup) {
   $('.js-scrollto').stickyitemSetup({
     stickyClass: 'is-sticky'
-	});
+  });
 }
 ```
 
