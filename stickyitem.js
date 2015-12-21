@@ -11,7 +11,7 @@ $.fn.stickyitemSetup = function (settings) {
   return this.each(function () {
 
     var $stickyitem = $(this),
-        stickyitemPosTop = $stickyitem.offset().top + startPosition,
+        stickyitemPosTop = $stickyitem.offset().top + settings.startPosition,
         windowPosTop,
         isSticked = false;
 
