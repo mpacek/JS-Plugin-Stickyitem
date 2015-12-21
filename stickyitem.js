@@ -5,56 +5,59 @@
 $.fn.stickyitemSetup = function (settings) {
   settings = jQuery.extend({
       stickyClass: 'is-sticky',
-      startPosition: 0 // add class earier, or later, eg. 100
+      startPosition: 0
   }, settings);
 
-  var $stickyitem = $(this),
-      stickyitemPosTop = $stickyitem.offset().top + startPosition,
-      windowPosTop,
-      isSticked = false;
+  return this.each(function () {
 
-  var stickItem = function () {
-    windowPosTop = $(window).scrollTop();
-
-    if (windowPosTop >= stickyitemPosTop) {
-      if (!isSticked) {
-        $stickyitem.addClass(settings.stickyClass);
-        isSticked = true;
-      }
-    } else {
-      if (isSticked) {
-        $stickyitem.removeClass(settings.stickyClass);
+    var $stickyitem = $(this),
+        stickyitemPosTop = $stickyitem.offset().top + startPosition,
+        windowPosTop,
         isSticked = false;
+
+    var stickItem = function () {
+      windowPosTop = $(window).scrollTop();
+
+      if (windowPosTop >= stickyitemPosTop) {
+        if (!isSticked) {
+          $stickyitem.addClass(settings.stickyClass);
+          isSticked = true;
+        }
+      } else {
+        if (isSticked) {
+          $stickyitem.removeClass(settings.stickyClass);
+          isSticked = false;
+        }
       }
     }
-  }
 
-  var runStickyitem = function () {
-    stickItem();
-
-    // check on scroll
-    $(window).on('scroll.stickyitem', function () {
+    var runStickyitem = function () {
       stickItem();
-    });
-  }
 
-  var clearStickyitem = function () {
-    $stickyitem.removeClass(settings.stickyClass);
-    $(window).off('scroll.stickyitem');
-  }
+      // check on scroll
+      $(window).on('scroll.stickyitem', function () {
+        stickItem();
+      });
+    }
 
-  // run on load
-  runStickyitem();
+    var clearStickyitem = function () {
+      $stickyitem.removeClass(settings.stickyClass);
+      $(window).off('scroll.stickyitem');
+    }
 
-  // Uses responsive.js helper plugin
-  // 'off' when on mobile
-  // 'on' when on desktop
-  if ($.fn.responsiveSetup) {
-    $(document).responsiveSetup({
-      onMobile: { callFunction: clearStickyitem },
-      onDesktop: { callFunction: runStickyitem }
-    });
-  }
+    // run on load
+    runStickyitem();
+
+    // Uses responsive.js helper plugin
+    // 'off' when on mobile
+    // 'on' when on desktop
+    if ($.fn.responsiveSetup) {
+      $(document).responsiveSetup({
+        onMobile: { callFunction: clearStickyitem },
+        onDesktop: { callFunction: runStickyitem }
+      });
+    }
+  });
 }
 
 }(jQuery));
